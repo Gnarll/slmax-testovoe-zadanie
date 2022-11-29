@@ -4,6 +4,8 @@ import {Swipeable} from 'react-native-gesture-handler';
 import Svg, {Path} from 'react-native-svg';
 import {useAppDispatch} from '../../store';
 import {deleteNote, INote} from '../../store/noteReducer';
+import {customStyles} from '../../styles';
+import {CommentsList} from '../CommentsList';
 import {Description} from './Description';
 
 export const NoteItem = (note: INote) => {
@@ -44,7 +46,7 @@ export const NoteItem = (note: INote) => {
         renderRightActions={() => {
           return isDeletePressed ? (
             <TouchableOpacity
-              style={[styles.deleteButton, styles.cancelDeleteButton]}
+              style={styles.deleteButton}
               onPress={clearDeleteTimeout}>
               <Image source={require('../../assets/Backward5seconds.png')} />
             </TouchableOpacity>
@@ -57,11 +59,16 @@ export const NoteItem = (note: INote) => {
           );
         }}>
         <View style={styles.wrapper}>
-          <Text style={styles.title}>{note.title}</Text>
-          <Text>{note.shortDescription}</Text>
+          <Text style={[customStyles.defaultTextStyles, styles.title]}>
+            {note.title}
+          </Text>
+          <Text
+            style={[customStyles.defaultTextStyles, styles.shortDescription]}>
+            {note.shortDescription}
+          </Text>
           <TouchableOpacity
             onPress={toggleIsShownDescr}
-            style={styles.showDescrButton}
+            style={styles.showDescriptionButton}
             hitSlop={styles.hitSlop}>
             <Svg width="10" height="5" viewBox="0 0 10 5" fill="none">
               <Path
@@ -75,7 +82,12 @@ export const NoteItem = (note: INote) => {
           </TouchableOpacity>
         </View>
       </Swipeable>
-      {isShownDescr ? <Description note={note} /> : null}
+      {isShownDescr ? (
+        <>
+          <Description note={note} />
+          <CommentsList note={note} />
+        </>
+      ) : null}
     </>
   );
 };
@@ -96,8 +108,16 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     paddingRight: 5,
     marginRight: 5,
+    fontWeight: '600',
+    fontSize: 16,
+    color: '#000000',
   },
-  showDescrButton: {
+  shortDescription: {
+    fontWeight: '300',
+    fontSize: 12,
+    color: '#000000',
+  },
+  showDescriptionButton: {
     position: 'absolute',
     right: 16,
   },
@@ -117,9 +137,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'red',
     borderRadius: 5,
-  },
-  cancelDeleteButton: {
-    width: 45,
   },
   deleteText: {color: '#ffffff'},
 });

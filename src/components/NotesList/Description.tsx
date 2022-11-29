@@ -1,29 +1,26 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {INote} from '../../store/noteReducer';
+import {getShortDate} from '../../utils';
 
 export const Description = ({note}: {note: INote}) => {
-  const getShortDate = (date: string): string => {
-    const parsedDate = new Date(date);
-    const year = parsedDate.getFullYear();
-    const month = parsedDate.getMonth() + 1;
-    const day = parsedDate.getDate();
-
-    return [day, month, year].join('.');
-  };
-
   return (
-    <View style={styles.description}>
-      <Text style={styles.date}>{getShortDate(note.date)}</Text>
-      <Text>{note.description}</Text>
+    <View style={styles.wrapper}>
+      <View style={styles.description}>
+        <Text style={styles.date}>{getShortDate(note.date)}</Text>
+        <Text>{note.description}</Text>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    paddingLeft: 20,
+  },
   description: {
     minHeight: 80,
-    paddingHorizontal: 20,
+    paddingRight: 20,
     paddingVertical: 25,
   },
   date: {

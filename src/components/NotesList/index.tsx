@@ -7,9 +7,9 @@ import {NoteItem} from './NoteItem';
 export const NotesList = () => {
   const notes = useAppSelector(state => state.note);
 
-  const renderItem = ({item}: {item: INote}) => {
+  const renderItem = useCallback(({item}: {item: INote}) => {
     return <NoteItem {...item} />;
-  };
+  }, []);
 
   const keyExtractor = useCallback((item: INote) => item.id, []);
 
