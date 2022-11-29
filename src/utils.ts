@@ -18,3 +18,25 @@ export const getDateWithTime = (date: string): string => {
 
     return [day, month, year].join('.') + ' в ' + hours + '.' + minutes;
 };
+
+
+export const isDateInRange = (currentDate: Date, startDate:Date | undefined, endDate: Date | undefined)  => {
+    let shouldShowNote = false;
+    if (
+      startDate &&
+      endDate &&
+      currentDate >=  startDate &&
+      currentDate <=  endDate
+    ) shouldShowNote = true;
+
+    if (
+      !endDate &&
+      startDate &&
+       startDate.getFullYear() === currentDate.getFullYear() &&
+       startDate.getMonth() === currentDate.getMonth() &&
+       startDate.getDate() === currentDate.getDate()
+    ) shouldShowNote = true;
+
+
+      return shouldShowNote
+}

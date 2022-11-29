@@ -3,6 +3,7 @@ import {StyleSheet, View, Image} from 'react-native';
 import SwitchWithIcons from 'react-native-switch-with-icons';
 import {useAppDispatch, useAppSelector} from '../store';
 import {toggleTheme} from '../store/themeReducer';
+import {DateFilterComponent} from './DateFilterComponent';
 import {NotesList} from './NotesList';
 import {NoteCreator} from './NotesList/NoteCreator';
 
@@ -17,18 +18,20 @@ export const MainContent = () => {
   };
   return (
     <View style={styles.wrapper}>
-      <SwitchWithIcons
-        thumbColor={{true: 'white', false: 'white'}}
-        trackColor={{true: '#7363D1', false: '#10637D'}}
-        iconColor={{true: '#7363D1', false: '#10637D'}}
-        icon={{
-          true: MoonImage,
-          false: SunImage,
-        }}
-        style={styles.switch}
-        value={isDarkMode}
-        onValueChange={changeTheme}
-      />
+      <View style={styles.underHeader}>
+        <DateFilterComponent />
+        <SwitchWithIcons
+          thumbColor={{true: 'white', false: 'white'}}
+          trackColor={{true: '#7363D1', false: '#10637D'}}
+          iconColor={{true: '#7363D1', false: '#10637D'}}
+          icon={{
+            true: MoonImage,
+            false: SunImage,
+          }}
+          value={isDarkMode}
+          onValueChange={changeTheme}
+        />
+      </View>
       <NotesList />
       <NoteCreator />
     </View>
@@ -40,6 +43,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingBottom: 40,
     paddingHorizontal: 30,
+  },
+  underHeader: {
+    height: 70,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   switch: {
     alignSelf: 'flex-end',
