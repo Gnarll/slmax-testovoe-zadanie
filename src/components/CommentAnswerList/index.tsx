@@ -2,6 +2,7 @@ import React, {useCallback, useState} from 'react';
 import {View, FlatList, Text, TouchableOpacity} from 'react-native';
 import {useAppSelector} from '../../store';
 import {ICommentAnswer} from '../../store/commentAnswerReducer';
+import {ThemeText} from '../ThemeComponents/ThemeText';
 import {CommentAnswerItem} from './CommentAnswerItem';
 
 export const CommentAnswerList = ({item}: {item: ICommentAnswer}) => {
@@ -37,9 +38,9 @@ export const CommentAnswerList = ({item}: {item: ICommentAnswer}) => {
         onPress={toggleShowAllAnswers}
         style={{marginLeft: 15, marginBottom: 5}}>
         {commentAnswersLength === 0 ? null : isShowAllAnswersPressed ? (
-          <Text>- Скрыть дополнительные ответы</Text>
+          <ThemeText>- Скрыть дополнительные ответы</ThemeText>
         ) : (
-          <Text>- Показать все ответы</Text>
+          <ThemeText>- Показать все ответы</ThemeText>
         )}
       </TouchableOpacity>
     </View>

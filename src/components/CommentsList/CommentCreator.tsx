@@ -7,11 +7,13 @@ import {
   TextInput,
   Image,
 } from 'react-native';
+import Svg, {Path} from 'react-native-svg';
 import uuid from 'react-native-uuid';
-import {useAppDispatch} from '../../store';
+import {useAppDispatch, useAppSelector} from '../../store';
 import {addComment, IComment} from '../../store/commentReducer';
 import {INote} from '../../store/noteReducer';
-import {customStyles} from '../../styles';
+import {ThemeText} from '../ThemeComponents/ThemeText';
+import {ThemeTextInput} from '../ThemeComponents/ThemeTextInput';
 
 interface ICommentCreator {
   item: INote;
@@ -43,23 +45,23 @@ export const CommentCreator = ({item}: ICommentCreator) => {
     setIsCommentPressed(state => !state);
   };
 
+  const theme = useAppSelector(state => state.theme);
+
   return !isAddCommentPressed ? (
     <TouchableOpacity
       style={styles.addCommentTextWrapper}
       onPress={toggleIsAddCommentPressed}>
-      <Text style={[customStyles.defaultTextStyles, styles.text]}>
-        Оставить комментарий
-      </Text>
+      <ThemeText style={styles.text}>Оставить комментарий</ThemeText>
     </TouchableOpacity>
   ) : (
     <View style={styles.addCommentFormWrapper}>
-      <TextInput
+      <ThemeTextInput
         placeholder="Название комментария"
         value={title}
         onChangeText={setTitle}
         maxLength={25}
       />
-      <TextInput
+      <ThemeTextInput
         placeholder="Напишите комментарий"
         value={commentText}
         onChangeText={setCommentText}
@@ -68,7 +70,16 @@ export const CommentCreator = ({item}: ICommentCreator) => {
         onPress={createComment}
         style={styles.addCommentButton}
         hitSlop={styles.hitSlop}>
-        <Image source={require('../../assets/AddNoteIcon.png')} />
+        <Svg width="5" height="10" viewBox="0 0 5 10" fill="none">
+          <Path
+            d="M0.73999 8.84525L4.25999 5.01629L0.73999 1.18733"
+            stroke="black"
+            stroke-width="0.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            fill={theme.isDarkMode ? 'white' : 'black'}
+          />
+        </Svg>
       </TouchableOpacity>
     </View>
   );

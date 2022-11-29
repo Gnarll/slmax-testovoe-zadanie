@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {IComment} from '../../store/commentReducer';
-import {customStyles} from '../../styles';
 import {getDateWithTime} from '../../utils';
 import {CommentAnswerList} from '../CommentAnswerList';
 import {CommentAnswerCreator} from '../CommentAnswerList/CommentAnswerCreator';
+import {ThemeText} from '../ThemeComponents/ThemeText';
 
 export const CommentItem = ({item}: {item: IComment}) => {
   const [isAnswerButtonPressed, setIsAnswerButtonPressed] = useState(false);
@@ -16,20 +16,19 @@ export const CommentItem = ({item}: {item: IComment}) => {
   return (
     <>
       <View style={styles.wrapper}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.commentText}>{item.commentText}</Text>
+        <ThemeText style={styles.title}>{item.title}</ThemeText>
+        <ThemeText style={styles.commentText}>{item.commentText}</ThemeText>
         <View>
           <View style={styles.dateWithAnswerButton}>
-            <Text style={styles.date}>{getDateWithTime(item.date)}</Text>
+            <ThemeText style={styles.date}>
+              {getDateWithTime(item.date)}
+            </ThemeText>
 
             {!isAnswerButtonPressed ? (
               <TouchableOpacity
                 onPress={toggleAnswerButton}
                 disabled={isAnswerButtonPressed}>
-                <Text
-                  style={[customStyles.defaultTextStyles, styles.answerButton]}>
-                  Ответить
-                </Text>
+                <ThemeText style={styles.answerButton}>Ответить</ThemeText>
               </TouchableOpacity>
             ) : null}
           </View>
@@ -63,12 +62,10 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: '600',
     fontSize: 15,
-    color: '#000000',
   },
   commentText: {
     fontWeight: '300',
     fontSize: 10,
-    color: '#000000',
   },
   dateWithAnswerButton: {
     flexDirection: 'row',

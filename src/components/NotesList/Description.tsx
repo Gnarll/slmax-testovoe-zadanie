@@ -2,13 +2,14 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {INote} from '../../store/noteReducer';
 import {getShortDate} from '../../utils';
+import {ThemeText} from '../ThemeComponents/ThemeText';
 
 export const Description = ({note}: {note: INote}) => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.description}>
-        <Text style={styles.date}>{getShortDate(note.date)}</Text>
-        <Text>{note.description}</Text>
+        <ThemeText style={styles.date}>{getShortDate(note.date)}</ThemeText>
+        <ThemeText>{note.description}</ThemeText>
       </View>
     </View>
   );
@@ -26,5 +27,6 @@ const styles = StyleSheet.create({
   date: {
     position: 'absolute',
     right: 20,
+    fontSize: 12,
   },
 });

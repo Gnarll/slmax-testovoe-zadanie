@@ -1,15 +1,10 @@
 import React, {useState} from 'react';
-import {
-  Image,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
 import uuid from 'react-native-uuid';
 import {addNote, INote} from '../../store/noteReducer';
-import {customStyles} from '../../styles';
-import {useAppDispatch} from '../../store';
+import {useAppDispatch, useAppSelector} from '../../store';
+import Svg, {Path} from 'react-native-svg';
+import {ThemeTextInput} from '../ThemeComponents/ThemeTextInput';
 
 export const NoteCreator = () => {
   const [title, setTitle] = useState('');
@@ -30,19 +25,20 @@ export const NoteCreator = () => {
     setDescription('');
   };
 
+  const theme = useAppSelector(state => state.theme);
+
   return (
     <View style={styles.wrapper}>
-      <TextInput
-        style={[styles.titleInput, customStyles.defaultTextStyles]}
+      <ThemeTextInput
+        style={styles.titleInput}
         placeholder="Название"
-        placeholderTextColor={'#000000'}
         maxLength={25}
         value={title}
         onChangeText={setTitle}
       />
       <View style={styles.horizontalLine} />
-      <TextInput
-        style={[styles.descriptionInput, customStyles.defaultTextStyles]}
+      <ThemeTextInput
+        style={styles.descriptionInput}
         placeholder="Текст описание"
         value={description}
         onChangeText={setDescription}
@@ -51,7 +47,16 @@ export const NoteCreator = () => {
         onPress={createNote}
         style={styles.addNoteButton}
         hitSlop={styles.hitSlop}>
-        <Image source={require('../../assets/AddNoteIcon.png')} />
+        <Svg width="5" height="10" viewBox="0 0 5 10" fill="none">
+          <Path
+            d="M0.73999 8.84525L4.25999 5.01629L0.73999 1.18733"
+            stroke="black"
+            stroke-width="0.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            fill={theme.isDarkMode ? 'white' : 'black'}
+          />
+        </Svg>
       </TouchableOpacity>
     </View>
   );

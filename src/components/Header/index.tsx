@@ -1,13 +1,12 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {customStyles} from '../../styles';
 import HeaderBackground from './HeaderBackground';
 
 export const Header = () => {
   return (
     <View style={styles.wrapper}>
       <HeaderBackground />
-      <Text style={[styles.text, customStyles.defaultTextStyles]}>Заметки</Text>
+      <Text style={styles.text}>Заметки</Text>
     </View>
   );
 };

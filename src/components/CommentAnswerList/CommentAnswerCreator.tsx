@@ -6,12 +6,14 @@ import {
   TextInput,
   Image,
 } from 'react-native';
+import Svg, {Path} from 'react-native-svg';
 import uuid from 'react-native-uuid';
-import {useAppDispatch} from '../../store';
+import {useAppDispatch, useAppSelector} from '../../store';
 import {
   addCommentAnswer,
   ICommentAnswer,
 } from '../../store/commentAnswerReducer';
+import {ThemeTextInput} from '../ThemeComponents/ThemeTextInput';
 
 interface ICommentCreator {
   item: ICommentAnswer;
@@ -42,16 +44,17 @@ export const CommentAnswerCreator = ({
     setCommentText('');
     setIsAnswerButtonPressed(state => !state);
   };
+  const theme = useAppSelector(state => state.theme);
 
   return isAnswerButtonPressed ? (
     <View style={styles.addCommentFormWrapper}>
-      <TextInput
+      <ThemeTextInput
         placeholder="Ответить на комментарий"
         value={title}
         onChangeText={setTitle}
         maxLength={25}
       />
-      <TextInput
+      <ThemeTextInput
         placeholder="Напишите комментарий"
         value={commentText}
         onChangeText={setCommentText}
@@ -60,7 +63,16 @@ export const CommentAnswerCreator = ({
         onPress={createCommentAnswer}
         style={styles.addCommentButton}
         hitSlop={styles.hitSlop}>
-        <Image source={require('../../assets/AddNoteIcon.png')} />
+        <Svg width="5" height="10" viewBox="0 0 5 10" fill="none">
+          <Path
+            d="M0.73999 8.84525L4.25999 5.01629L0.73999 1.18733"
+            stroke="black"
+            stroke-width="0.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            fill={theme.isDarkMode ? 'white' : 'black'}
+          />
+        </Svg>
       </TouchableOpacity>
     </View>
   ) : null;

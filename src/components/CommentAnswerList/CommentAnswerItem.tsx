@@ -2,15 +2,18 @@ import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {ICommentAnswer} from '../../store/commentAnswerReducer';
 import {getDateWithTime} from '../../utils';
+import {ThemeText} from '../ThemeComponents/ThemeText';
 
 export const CommentAnswerItem = ({item}: {item: ICommentAnswer}) => {
   return (
     <>
       <View style={styles.wrapper}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.commentText}>{item.commentText}</Text>
+        <ThemeText style={styles.title}>{item.title}</ThemeText>
+        <ThemeText style={styles.commentText}>{item.commentText}</ThemeText>
         <View style={styles.dateWrapper}>
-          <Text style={styles.date}>{getDateWithTime(item.date)}</Text>
+          <ThemeText style={styles.date}>
+            {getDateWithTime(item.date)}
+          </ThemeText>
         </View>
       </View>
     </>
@@ -33,12 +36,10 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: '600',
     fontSize: 15,
-    color: '#000000',
   },
   commentText: {
     fontWeight: '300',
     fontSize: 10,
-    color: '#000000',
   },
   dateWrapper: {
     flexDirection: 'row',

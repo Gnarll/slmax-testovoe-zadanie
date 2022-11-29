@@ -2,10 +2,11 @@ import React, {useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Swipeable} from 'react-native-gesture-handler';
 import Svg, {Path} from 'react-native-svg';
-import {useAppDispatch} from '../../store';
+import {useAppDispatch, useAppSelector} from '../../store';
 import {deleteNote, INote} from '../../store/noteReducer';
-import {customStyles} from '../../styles';
 import {CommentsList} from '../CommentsList';
+import {NoteView} from '../ThemeComponents/NoteView';
+import {ThemeText} from '../ThemeComponents/ThemeText';
 import {Description} from './Description';
 
 export const NoteItem = (note: INote) => {
@@ -40,6 +41,8 @@ export const NoteItem = (note: INote) => {
     setTimeoutId(null);
   };
 
+  const theme = useAppSelector(state => state.theme);
+
   return (
     <>
       <Swipeable
@@ -54,18 +57,15 @@ export const NoteItem = (note: INote) => {
             <TouchableOpacity
               style={styles.deleteButton}
               onPress={deleteTimeout}>
-              <Text style={styles.deleteText}>Удалить</Text>
+              <Text style={styles.deleteButtonText}>Удалить</Text>
             </TouchableOpacity>
           );
         }}>
-        <View style={styles.wrapper}>
-          <Text style={[customStyles.defaultTextStyles, styles.title]}>
-            {note.title}
-          </Text>
-          <Text
-            style={[customStyles.defaultTextStyles, styles.shortDescription]}>
+        <NoteView style={styles.wrapper}>
+          <ThemeText style={styles.title}>{note.title}</ThemeText>
+          <ThemeText style={styles.shortDescription}>
             {note.shortDescription}
-          </Text>
+          </ThemeText>
           <TouchableOpacity
             onPress={toggleIsShownDescr}
             style={styles.showDescriptionButton}
@@ -77,10 +77,11 @@ export const NoteItem = (note: INote) => {
                 stroke-width="0.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                fill={theme.isDarkMode ? 'white' : 'black'}
               />
             </Svg>
           </TouchableOpacity>
-        </View>
+        </NoteView>
       </Swipeable>
       {isShownDescr ? (
         <>
@@ -102,7 +103,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 10,
     paddingLeft: 16,
-    backgroundColor: '#ffffff',
   },
   title: {
     borderRightWidth: 1,
@@ -110,12 +110,10 @@ const styles = StyleSheet.create({
     marginRight: 5,
     fontWeight: '600',
     fontSize: 16,
-    color: '#000000',
   },
   shortDescription: {
     fontWeight: '300',
     fontSize: 12,
-    color: '#000000',
   },
   showDescriptionButton: {
     position: 'absolute',
@@ -138,5 +136,7 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     borderRadius: 5,
   },
-  deleteText: {color: '#ffffff'},
+  deleteButtonText: {
+    color: 'white',
+  },
 });
